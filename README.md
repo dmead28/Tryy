@@ -49,7 +49,7 @@ guard let err = enumResult.error else {
     return
 }
 
-// No need to unwrap if it errorFunc(a:) doesn't return an optional
+// No need to unwrap it if errorFunc(a:) doesn't return an optional
 let value: String = enumResult.val
 
 // Optional version
