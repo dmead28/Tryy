@@ -11,7 +11,7 @@ import Foundation
 
 // MARK: - Tuple version
 
-public func tryy<T>(_ block: () throws -> (T)) -> (Error?, T?) {
+public func tryy<T>(_ block: () throws -> T) -> (Error?, T?) {
     var value: T?
     var err: Error?
     do {
@@ -22,12 +22,7 @@ public func tryy<T>(_ block: () throws -> (T)) -> (Error?, T?) {
     return (err, value)
 }
 
-public func ___<T>(_ block: () throws -> (T)) -> (Error?, T?) {
-    return tryy(block)
-}
-
-prefix operator <--
-public prefix func <--<T>(block: () throws -> (T)) -> (Error?, T?) {
+public func ___<T>(_ block: () throws -> T) -> (Error?, T?) {
     return tryy(block)
 }
 
@@ -43,6 +38,13 @@ public enum TryWrapResult<T> {
             return nil
         }
     }
+    var val: T! {
+        if case .value(let newVal) = self {
+            return newVal
+        } else {
+            return nil
+        }
+    }
     var error: Error? {
         if case .error(let newError) = self {
             return newError
@@ -52,7 +54,7 @@ public enum TryWrapResult<T> {
     }
 }
 
-public func tryyWrap<T>(_ block: () throws -> (T)) -> TryWrapResult<T> {
+public func tryyWrap<T>(_ block: () throws -> T) -> TryWrapResult<T> {
     do {
         let value = try block()
         return TryWrapResult.value(value: value)
@@ -61,11 +63,6 @@ public func tryyWrap<T>(_ block: () throws -> (T)) -> TryWrapResult<T> {
     }
 }
 
-public func __<T>(_ block: () throws -> (T)) -> TryWrapResult<T> {
-    return tryyWrap(block)
-}
-
-prefix operator <-
-public prefix func <-<T>(block: () throws -> T) -> TryWrapResult<T> {
+public func __<T>(_ block: () throws -> T) -> TryWrapResult<T> {
     return tryyWrap(block)
 }
