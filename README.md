@@ -5,7 +5,7 @@
 
 Swift's try-catch model can be messy, especially in terms of scope and for those of us that don't like the extra indent (especially with closures). You might get something like:
 
-```
+```swift
 do {
   let foo = try someFunc(num: arg) { result in
     ...
@@ -24,7 +24,7 @@ This framework simplifies everything to one line. It flattens it.
 
 ## tryy(_:)
 ### Go-like tuple
-```
+```swift
 let (tupleErr, tupleVal) = tryy { try errorFunc(a: 5) }
 
 // Return early for errors
@@ -40,7 +40,7 @@ print(value)
 
 ## tryyWrap(_:)
 ### As an enum (properties)
-```
+```swift
 let enumResult = tryyWrap { try errorFunc(a: -3) }
 
 // Return early for errors
@@ -57,7 +57,7 @@ let valueOptional: String = enumResult.value
 ```
 
 ### As an enum (switch)
-```
+```swift
 let enumResult = tryyWrap { try errorFunc(a: -3) }
 
 // From a switch
@@ -70,7 +70,7 @@ case .error(let err):
 ```
 
 ## Underscores
-```
+```swift
 let enumResult = __ { try errorFunc(a: 5) }
 let (tupleErr, tupleVal) = ___ { try errorFunc(a: 5) }
 ```
@@ -79,7 +79,7 @@ let (tupleErr, tupleVal) = ___ { try errorFunc(a: 5) }
 
 Keep in mind you can only ommit `return` and return type on one liners. The block must return the value. In situations like this, the compiler will assume the the return type is Void and you will not end up with a value
 
-```
+```swift
 // This WILL NOT work
 let tupleResultCompletion = tryy {
     let a = 4 * 2
@@ -101,7 +101,7 @@ print(tupleResultCompletion)
 
 # Example usage (feel free to copy / paste this into a playground
 
-```
+```swift
 enum TestError: Error {
     case foo
     case bar
