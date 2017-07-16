@@ -28,14 +28,12 @@ This framework simplifies everything to one line. It flattens it.
 let (tupleErr, tupleVal) = tryy { try errorFunc(a: 5) }
 
 // Return early for errors
-guard let err = tupleErr else {
-    print(err)
+if let err = tupleErr else {
     return
 }
 
 // Use value in same scope
 guard let value: String = tupleVal else { return }
-print(value)
 ```
 
 ## tryyWrap(_:)
@@ -44,8 +42,7 @@ print(value)
 let enumResult = tryyWrap { try errorFunc(a: -3) }
 
 // Return early for errors
-guard let err = enumResult.error else {
-    print(err)
+if let err = enumResult.error else {
     return
 }
 
@@ -87,7 +84,6 @@ let tupleResultCompletion = tryy {
         return "\(num) * 2 = \(num * 2)"
     })
 }
-print(tupleResultCompletion)
 
 // This WILL work
 let tupleResultCompletion = tryy { () -> String? in
@@ -96,7 +92,6 @@ let tupleResultCompletion = tryy { () -> String? in
         return "\(num) * 2 = \(num * 2)"
     })
 }
-print(tupleResultCompletion)
 ```
 
 # Example usage
@@ -125,7 +120,6 @@ do {
     let strResult = try errorFunc(a: -4, completion: { (num) -> String in
         return "\(num) + 4 = \(num + 4)"
     })
-    print(strResult)
 } catch let error as TestError {
     switch error {
     case .foo:
@@ -144,14 +138,11 @@ do {
     
     // Return early for errors
     if let err = tupleErr {
-        print(err)
         return
     }
     
     // Use value in same scope
     guard let value: String = tupleVal else { return }
-    print(value)
-
 ```
 
 ```swift
@@ -160,7 +151,6 @@ do {
     
     // Use value in same scope
     guard let value: String = tupleVal else { return }
-    print(value)
 ```
 
 ```swift
@@ -169,8 +159,6 @@ do {
             return "\(num) * 2 = \(num * 2)"
         })
     }
-    print(tupleResultCompletion)
-
 ```
 
 ### Enum examples
@@ -200,18 +188,15 @@ do {
     let enumResult = tryyWrap { try errorFunc(a: -3) }
     
     // Return early for errors
-    guard let err = enumResult.error else {
-        print(err)
+    if let err = enumResult.error else {
         return
     }
     
-    // No need to unwrap
+    // No need to unwrap it if errorFunc(a:) doesn't return an optional
     let value: String = enumResult.val
-    print(value)
     
-    // In case your function returns an optional
+    // Optional version
     guard let valueUnwrapped = enumResult.value else { return }
-    print(valueUnwrapped)
 ```
 
 ```swift
@@ -219,5 +204,4 @@ do {
     guard let value = tryyWrap({ try errorFunc(a: -3) }).value else {
         return
     }
-    print(value)
 ```
