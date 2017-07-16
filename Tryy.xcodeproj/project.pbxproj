@@ -8,12 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		911FEF9A1F1B26D800DF5C7F /* Tryy.h in Headers */ = {isa = PBXBuildFile; fileRef = 911FEF981F1B26D800DF5C7F /* Tryy.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		911FEFA11F1B26E200DF5C7F /* Tryy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 911FEFA01F1B26E200DF5C7F /* Tryy.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		911FEF951F1B26D800DF5C7F /* Tryy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Tryy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		911FEF981F1B26D800DF5C7F /* Tryy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Tryy.h; sourceTree = "<group>"; };
 		911FEF991F1B26D800DF5C7F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		911FEFA01F1B26E200DF5C7F /* Tryy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tryy.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,6 +50,7 @@
 			children = (
 				911FEF981F1B26D800DF5C7F /* Tryy.h */,
 				911FEF991F1B26D800DF5C7F /* Info.plist */,
+				911FEFA01F1B26E200DF5C7F /* Tryy.swift */,
 			);
 			path = Tryy;
 			sourceTree = "<group>";
@@ -95,6 +98,7 @@
 				TargetAttributes = {
 					911FEF941F1B26D800DF5C7F = {
 						CreatedOnToolsVersion = 9.0;
+						LastSwiftMigration = 0900;
 					};
 				};
 			};
@@ -130,6 +134,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				911FEFA11F1B26E200DF5C7F /* Tryy.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -248,6 +253,7 @@
 		911FEF9E1F1B26D800DF5C7F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 4743B37GFL;
@@ -260,6 +266,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.doug.Tryy;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -268,6 +275,7 @@
 		911FEF9F1F1B26D800DF5C7F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 4743B37GFL;
