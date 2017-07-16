@@ -99,7 +99,9 @@ let tupleResultCompletion = tryy { () -> String? in
 print(tupleResultCompletion)
 ```
 
-# Example usage (feel free to copy / paste this into a playground
+# Example usage
+
+These examples will use this code
 
 ```swift
 enum TestError: Error {
@@ -114,7 +116,11 @@ func errorFunc(a: Int, completion: ((Int)->String)? = nil) throws -> String {
         throw TestError.foo
     }
 }
+```
 
+### Old way
+
+```swift
 do {
     let strResult = try errorFunc(a: -4, completion: { (num) -> String in
         return "\(num) + 4 = \(num + 4)"
@@ -128,118 +134,90 @@ do {
         print("Bar error")
     }
 }
+```
 
-_ = {
-    // Enum switch
-    let enumResult = tryyWrap { try errorFunc(a: -3) }
-    switch enumResult {
-    case .value(let value):
-        print(value)
-    case .error(let err):
-        print(err.localizedDescription)
-    }
-}()
+### Tuple examples
 
-_ = {
-    // Enum direct
-    let enumResult = tryyWrap { try errorFunc(a: -3) }
-    let error = enumResult.error
-    let valueOpt: String? = enumResult.value
-    print(error.debugDescription)
-    print(valueOpt ?? "")
-}()
-
-_ = {
+```swift
     // Go-like: Return a tuple of an error and value
     let (tupleErr, tupleVal) = tryy { try errorFunc(a: 5) }
+    
     // Return early for errors
     if let err = tupleErr {
         print(err)
         return
     }
+    
     // Use value in same scope
     guard let value: String = tupleVal else { return }
     print(value)
-}()
 
-_ = {
-    // Underscores
-    let enumResult = __ { try errorFunc(a: 5) }
-    let (tupleErr, tupleVal) = ___ { try errorFunc(a: 5) }
-}()
+```
 
-_ = {
+```swift
     // Discard: works like try?
     let (_, tupleVal) = tryy { try errorFunc(a: 5) }
+    
     // Use value in same scope
     guard let value: String = tupleVal else { return }
     print(value)
-}()
+```
 
-_ = {
+```swift
     let tupleResultCompletion = tryy {
         try errorFunc(a: 3, completion: { (num) -> String in
             return "\(num) * 2 = \(num * 2)"
         })
     }
     print(tupleResultCompletion)
-}()
 
-_ = {
-    // Keep in mind you can only ommit `return` and return type on one liners. The block must return the value. In situations like this, the compiler will assume the the return type is Void and you will not end up with a value
-    // This WILL NOT work
-    let tupleResultCompletion = tryy {
-        let a = 4 * 2
-        try errorFunc(a: a, completion: { (num) -> String in
-            return "\(num) * 2 = \(num * 2)"
-        })
-    }
-    print(tupleResultCompletion)
-}()
+```
 
-_ = {
-    // This WILL work
-    let tupleResultCompletion = tryy { () -> String? in
-        let a = 4 * 2
-        return try errorFunc(a: a, completion: { (num) -> String in
-            return "\(num) * 2 = \(num * 2)"
-        })
-    }
-    print(tupleResultCompletion)
-}()
+### Enum examples
 
-_ = {
+```swift
     // Enum switch
     let enumResult = tryyWrap { try errorFunc(a: -3) }
+    
     switch enumResult {
     case .value(let value):
         print(value)
     case .error(let err):
-        print(err)
+        print(err.localizedDescription)
     }
-}()
+```
 
-_ = {
+```swift
+    // Enum direct
+    let enumResult = tryyWrap { try errorFunc(a: -3) }
+    
+    let error = enumResult.error
+    let valueOpt: String? = enumResult.value
+```
+
+```swift
     // Enum Go-like: Return an enum of an error and value
     let enumResult = tryyWrap { try errorFunc(a: -3) }
+    
     // Return early for errors
     guard let err = enumResult.error else {
         print(err)
         return
     }
+    
     // No need to unwrap
     let value: String = enumResult.val
     print(value)
+    
     // In case your function returns an optional
     guard let valueUnwrapped = enumResult.value else { return }
     print(valueUnwrapped)
-}()
+```
 
-_ = {
+```swift
     // Enum guard: like try?
     guard let value = tryyWrap({ try errorFunc(a: -3) }).value else {
         return
     }
     print(value)
-}()
 ```
